@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "324191738229",
+    "project_id": "microredesocialmatheus",
+    "storage_bucket": "microredesocialmatheus.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324191738229:android:3a66a808345a519e0b1b3c",
+        "android_client_info": {
+          "package_name": "br.com.ifsp.matheus.microredesocial"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtN8-IJ4D5u_OKZUg4HgsIQ7p_DQGpFBQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

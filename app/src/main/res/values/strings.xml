@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Micro Rede Social</string>
+    <string name="login_btn">Entrar</string>
+    <string name="signup_btn">Cadastre-se</string>
+    <string name="email_hint">E-mail</string>
+    <string name="password_hint">Senha</string>
+    <string name="btn_post">Postar</string>
+    <string name="search_hint">Buscar cidade…</string>
+    <string name="profile_title">Perfil</string>
+</resources>
