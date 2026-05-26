@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.ifsp.matheus.microredesocial.R
 import br.com.ifsp.matheus.microredesocial.model.Post
 import br.com.ifsp.matheus.microredesocial.util.Base64Converter
+import android.content.Intent
+import br.com.ifsp.matheus.microredesocial.ui.PostDetailActivity
 
 class PostAdapter(private var posts: List<Post>) : RecyclerView.Adapter<PostAdapter.PostViewHolder>() {
 
@@ -32,6 +34,12 @@ class PostAdapter(private var posts: List<Post>) : RecyclerView.Adapter<PostAdap
         holder.txtCity.text = post.cidade
         holder.txtDescription.text = post.texto
         
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, PostDetailActivity::class.java)
+            intent.putExtra("POST_DATA", post)
+            holder.itemView.context.startActivity(intent)
+        }
+
         if (post.fotoAutor.isNotEmpty()) {
             try {
                 holder.imgAuthorThumb.setImageBitmap(Base64Converter.stringToBitmap(post.fotoAutor))

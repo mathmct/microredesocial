@@ -17,7 +17,21 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 
-class HomeActivity : AppCompatActivity() {
+import android.content.Context
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.os.VibratorManager
+import kotlin.math.sqrt
+
+import android.view.Menu
+import android.view.MenuItem
+
+class HomeActivity : AppCompatActivity(), SensorEventListener {
 
     private lateinit var binding: ActivityHomeBinding
     private val firebaseAuth = FirebaseAuth.getInstance()
@@ -27,10 +41,25 @@ class HomeActivity : AppCompatActivity() {
     private var lastVisible: DocumentSnapshot? = null
     private var isLoading = false
 
+    private lateinit var sensorManager: SensorManager
+    private var accelerometer: Sensor? = null
+    private var lightSensor: Sensor? = null
+    private var acceleration = 0f
+    private var currentAcceleration = 0f
+    private var lastAcceleration = 0f
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
+
+        acceleration = 10f
+        currentAcceleration = SensorManager.GRAVITY_EARTH
+        lastAcceleration = SensorManager.GRAVITY_EARTH
 
         setSupportActionBar(binding.toolbarHome)
         supportActionBar?.title = "Micro Rede Social"
@@ -68,6 +97,82 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.home_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menu_about) {
+            startActivity(Intent(this, AboutActivity::class.java))
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        accelerometer?.let {
+            sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_NORMAL)
+        }
+        lightSensor?.let {
+            sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_NORMAL)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        sensorManager.unregisterListener(this)
+    }
+
+    override fun onSensorChanged(event: SensorEvent?) {
+        if (event == null) return
+
+        if (event.sensor.type == Sensor.TYPE_ACCELEROMETER) {
+            val x = event.values[0]
+            val y = event.values[1]
+            val z = event.values[2]
+            
+            lastAcceleration = currentAcceleration
+            currentAcceleration = sqrt((x * x + y * y + z * z).toDouble()).toFloat()
+            val delta = currentAcceleration - lastAcceleration
+            acceleration = acceleration * 0.9f + delta
+            
+            if (acceleration > 5) {
+                Log.d("SENSOR_TEST", "Shake detectado!")
+                if (!isLoading) {
+                    vibratePhone()
+                    Toast.makeText(this, "Atualizando feed...", Toast.LENGTH_SHORT).show()
+                    refreshFeed()
+                }
+            }
+        } else if (event.sensor.type == Sensor.TYPE_LIGHT) {
+            val lux = event.values[0]
+            Log.d("SENSOR_TEST", "Luminosidade: $lux lux")
+            
+            if (lux < 10f) {
+                binding.toolbarHome.subtitle = "Ambiente escuro - Modo leitura"
+            } else {
+                binding.toolbarHome.subtitle = ""
+            }
+        }
+    }
+
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+    }
+
+    private fun vibratePhone() {
+        val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val vibratorManager = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+            vibratorManager.defaultVibrator
+        } else {
+            @Suppress("DEPRECATION")
+            getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+        }
+
+        vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE))
     }
 
     override fun onStart() {
