@@ -2,7 +2,7 @@
 
 Este projeto foi desenvolvido como parte da disciplina de Desenvolvimento de Sistemas para Dispositivos Móveis no **IFSP (Instituto Federal de São Paulo)**. O objetivo foi criar uma rede social funcional, utilizando tecnologias modernas de desenvolvimento Android e integração com serviços em nuvem.
 
-## 🎥 Vídeos do Projeto
+## Vídeos do Projeto
 
 Para entender melhor o funcionamento e a implementação técnica, assista aos vídeos abaixo:
 
@@ -11,7 +11,7 @@ Para entender melhor o funcionamento e a implementação técnica, assista aos v
 
 ---
 
-## 🚀 Funcionalidades Principais
+## Funcionalidades Principais
 
 *   **Sistema de Login e Cadastro:** Autenticação segura via Firebase Auth.
 *   **Feed com Paginação:** As postagens são carregadas de 5 em 5 para otimizar o consumo de dados e performance (RF3-1).
@@ -20,14 +20,14 @@ Para entender melhor o funcionamento e a implementação técnica, assista aos v
 *   **Perfil Personalizável:** Edição de dados pessoais e foto de perfil (convertida em Base64 para persistência leve).
 *   **Design Responsivo:** Interface construída com `CoordinatorLayout` e `BottomAppBar`, garantindo fluidez e usabilidade.
 
-## 🛠 Stack Técnica
+## Aspectos Técnicos
 
 *   **Linguagem:** Kotlin
 *   **Backend:** Firebase (Authentication e Firestore)
 *   **UI/UX:** XML Layouts, Material Design 3, ViewBinding e RecyclerView.
 *   **Localização:** Google Play Services (Location & Geocoder).
 
-## 📂 Estrutura do Código
+## Estrutura do Código
 
 O projeto está organizado seguindo as melhores práticas de desenvolvimento Android:
 *   `ui/`: Activities que controlam a lógica de cada tela.
@@ -36,6 +36,6 @@ O projeto está organizado seguindo as melhores práticas de desenvolvimento And
 *   `util/`: Classes auxiliares como o conversor de imagens.
 
 ---
-**Desenvolvido por:** Matheus
+**Desenvolvido por:** Matheus Costa Teixeira
 **Orientação:** Prof. Henrique Galati
 **Instituição:** IFSP - Campus Araraquara
