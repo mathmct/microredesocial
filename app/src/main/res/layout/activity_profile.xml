@@ -105,6 +105,15 @@
                 android:layout_marginTop="8dp"
                 android:text="Cancelar e Voltar" />
 
+            <Button
+                android:id="@+id/btnLogoutProfile"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Sair da Conta"
+                android:textColor="@android:color/holo_red_dark" />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

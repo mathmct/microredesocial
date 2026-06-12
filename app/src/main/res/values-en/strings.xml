@@ -6,4 +6,5 @@
     <string name="btn_post">Post</string>
     <string name="search_hint">Search city…</string>
     <string name="profile_title">Profile</string>
+    <string name="menu_logout">Logout</string>
 </resources>

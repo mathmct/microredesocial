@@ -6,6 +6,9 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -60,6 +63,11 @@
         <activity
             android:name=".ui.AboutActivity"
             android:label="Sobre o App"
+            android:theme="@style/Theme.Microredesocial" />
+
+        <activity
+            android:name=".ui.ChatActivity"
+            android:label="Chat"
             android:theme="@style/Theme.Microredesocial" />
 
     </application>

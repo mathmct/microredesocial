@@ -2,11 +2,13 @@ package br.com.ifsp.matheus.microredesocial.ui
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.location.Geocoder
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.launch
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import br.com.ifsp.matheus.microredesocial.R
@@ -43,8 +45,22 @@ class NewPostActivity : AppCompatActivity() {
             }
         }
 
+        val camera = registerForActivityResult(ActivityResultContracts.TakePicturePreview()) { bitmap ->
+            if (bitmap != null) {
+                binding.postImage.setImageBitmap(bitmap)
+            }
+        }
+
         binding.btnSelectImage.setOnClickListener {
             galeria.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        }
+
+        binding.btnTakePhoto.setOnClickListener {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), 200)
+            } else {
+                camera.launch()
+            }
         }
 
         binding.btnGetLocation.setOnClickListener {
@@ -85,8 +101,6 @@ class NewPostActivity : AppCompatActivity() {
                 }
             }
         }
-
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onSupportNavigateUp(): Boolean {

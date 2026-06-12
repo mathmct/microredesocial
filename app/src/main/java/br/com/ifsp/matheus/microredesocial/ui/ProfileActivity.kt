@@ -1,5 +1,6 @@
 package br.com.ifsp.matheus.microredesocial.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -98,6 +99,14 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         binding.btnVoltar.setOnClickListener {
+            finish()
+        }
+
+        binding.btnLogoutProfile.setOnClickListener {
+            firebaseAuth.signOut()
+            val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
             finish()
         }
     }

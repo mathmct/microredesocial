@@ -6,4 +6,9 @@
         android:icon="@android:drawable/ic_menu_info_details"
         android:title="Sobre o App"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/btnLogout"
+        android:icon="@android:drawable/ic_lock_power_off"
+        android:title="@string/menu_logout"
+        app:showAsAction="always" />
 </menu>
